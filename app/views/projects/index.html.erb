@@ -1,0 +1,7 @@
+<%= render "projects/form",project:Project.new%>
+
+<div class="container position-relative project-listing">
+  <div class="row">
+    <%= render partial: "projects/project", collection: @projects %>
+  </div>
+</div>
