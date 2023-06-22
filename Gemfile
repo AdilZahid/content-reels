@@ -67,6 +67,16 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "pry", "~> 0.13.1"
   gem "pry-byebug", "~> 3.4"
+
+  gem 'rspec-rails', '~> 6.0.0'
+  gem 'factory_bot_rails'
+  gem "faker"
+
+  gem 'webmock', '~> 3.18', '>= 3.18.1'
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :development do
