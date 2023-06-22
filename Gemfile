@@ -71,6 +71,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.0.0'
   gem 'factory_bot_rails'
   gem "faker"
+  gem 'rspec_junit_formatter'
 
   gem 'webmock', '~> 3.18', '>= 3.18.1'
   gem 'rubocop', require: false
