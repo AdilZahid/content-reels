@@ -5,7 +5,7 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:3.1.2
-
+    parallelism: 3
     steps:
       - checkout
       - ruby/install-deps
