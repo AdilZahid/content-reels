@@ -1,43 +1,26 @@
-# CircleCI config.yml example
 version: 2.1
+orbs:
+  ruby: circleci/ruby@2.0.1
 jobs:
-  # running commands on a basic image
-  Hello-World:
+  build:
     docker:
-      - image: cimg/base:2021.04
-    steps:
-      - run:
-          name: Saying Hello
-          command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
-  # fetching code from the repo
-  Fetch-Code:
-    docker:
-      - image: cimg/base:2021.04
+      - image: cimg/ruby:3.1.2-node
     steps:
       - checkout
-      - run:
-          name: Getting the Code
-          command: |
-            ls -al
-            echo '^^^Your repo files^^^'
-  # running a node container
-  Using-Node:
+      - ruby/install-deps
+  test:
     docker:
-      - image: cimg/node:17.2
+      - image: cimg/ruby:3.1.2-node
     steps:
-      - run:
-          name: Running the Node Container
-          command: |
-            node -v
+      - checkout
+      - ruby/install-deps
+      # Run rspec
+      - ruby/rspec-test
 workflows:
-  Example-Workflow:
+  version: 2
+  build_and_test:
     jobs:
-      - Hello-World
-      - Fetch-Code:
+      - build
+      - test:
           requires:
-            - Hello-World
-      - Using-Node:
-          requires:
-            - Fetch-Code
+            - build
