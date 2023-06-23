@@ -1,22 +1,40 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@2.0.1
+
 jobs:
   build:
     docker:
       - image: cimg/ruby:3.1.2-node
-    parallelism: 3
     steps:
       - checkout
       - ruby/install-deps
   test:
+    # parallelism: 3
     docker:
       - image: cimg/ruby:3.1.2-node
-    parallelism: 3
+      - image: circleci/postgres:12.14
+        environment:
+          POSTGRES_USER: circleci-demo-ruby
+          POSTGRES_DB: rails_blog_test
+          POSTGRES_PASSWORD: ""
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      PGHOST: 127.0.0.1
+      PGUSER: circleci-demo-ruby
+      PGPASSWORD: ""
+      RAILS_ENV: test
     steps:
       - checkout
       - ruby/install-deps
-      # Run rspec
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bundle exec rails db:schema:load --trace
+      # Run rspec in parallel
       - ruby/rspec-test
 workflows:
   version: 2
