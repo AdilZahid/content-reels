@@ -15,14 +15,14 @@ jobs:
       - image: cimg/ruby:3.1.2-node
       - image: cimg/postgres:15.0
         environment:
-          POSTGRES_USER: circleci-demo-ruby
-          POSTGRES_DB: rails_blog_test
+          POSTGRES_USER: postgres-circleci
+          POSTGRES_DB: content_reels_test
           POSTGRES_PASSWORD: ""
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
       PGHOST: 127.0.0.1
-      PGUSER: circleci-demo-ruby
+      PGUSER: postgres-circleci
       PGPASSWORD: ""
       RAILS_ENV: test
     steps:
@@ -31,6 +31,7 @@ jobs:
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: mv config/database.yml.sample config/database.yml
       - run:
           name: Database setup
           command: bundle exec rails db:schema:load --trace
