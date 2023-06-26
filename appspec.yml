@@ -8,8 +8,8 @@ permissions:
     owner: deploy
     group: sudo
 AfterInstall:
-  - location: script/AfterInstall.sh
+  - location: scripts/after.sh
     runas: deploy
 ApplicationStart:
-  - location: script/start.sh
+  - location: scripts/start.sh
     runas: deploy
