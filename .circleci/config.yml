@@ -49,3 +49,8 @@ workflows:
       - aws-code-deploy/deploy:
           requires:
             - test
+          application-name: $APP_NAME
+          bundle-bucket: $BUNDLE_BUCKET
+          bundle-key: code/source
+          deployment-group: main
+          service-role-arn: $ARN
