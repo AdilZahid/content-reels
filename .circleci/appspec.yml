@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/deploy/apps/contentreels/current
+permissions:
+  - object: /home/deploy/apps/contentreels/current
+    owner: deploy
+    group: sudo
+AfterInstall:
+  - location: script/AfterInstall.sh
+    runas: deploy
+ApplicationStart:
+  - location: script/start.sh
+    runas: deploy
