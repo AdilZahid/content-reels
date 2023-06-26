@@ -5,11 +5,11 @@ files:
     destination: /home/deploy/apps/contentreels/current
 permissions:
   - object: /home/deploy/apps/contentreels/current
-    owner: deploy
+    owner: ubuntu
     group: sudo
 AfterInstall:
   - location: scripts/after.sh
-    runas: deploy
+    runas: ubuntu
 ApplicationStart:
   - location: scripts/start.sh
-    runas: deploy
+    runas: ubuntu
